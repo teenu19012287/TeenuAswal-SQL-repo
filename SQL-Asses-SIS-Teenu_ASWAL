@@ -1,0 +1,347 @@
+-- Task1. DataBase Design
+-- 1. Create the database named "SISDB"
+CREATE DATABASE SISDB;
+USE SISDB;
+--2. Define the schema for the Students, Courses, Enrollments, Teacher, and Payments tables based 
+on the provided schema. Write SQL scripts to create the mentioned tables with appropriate data 
+types, constraints, and relationships. 
+a. Students 
+b. Courses 
+c. Enrollments 
+d. Teacher 
+e. Payments
+CREATE TABLE Students(
+StudentID int NOT NULL,
+FirstName varchar(40) default NULL,
+LastName varchar(20) default NULL,
+DOB DATE,
+Email varchar(40) DEFAULT NULL,
+PhoneNo int default NULL,
+PRIMARY KEY(StudentID)
+);
+
+CREATE TABLE Teacher(
+TeacherID int NOT NULL,
+FirstName varchar(40) default NULL,
+LastName varchar(20) default NULL,
+Email varchar(40) DEFAULT NULL,
+PRIMARY KEY(TeacherID)
+);
+
+CREATE TABLE Courses(
+CourseID int NOT NULL,
+CourseName varchar(40) default NULL,
+Credits int,
+TeacherID Int,
+PRIMARY KEY(CourseID),
+FOREIGN key (TeacherID) references  Teacher(TeacherID)
+);
+
+CREATE TABLE Enrollments(
+EnrollmentID int NOT NULL,
+StudentID INT,
+CourseID INT,
+EnrollmentDate DATE,
+PRIMARY KEY(EnrollmentID),
+FOREIGN KEY (STUDENTID)
+REFERENCES Students(StudentID),
+FOREIGN KEY (CourseID) references Courses(CourseID)
+);
+
+CREATE TABLE Payments(
+PaymentID int NOT NULL,
+StudentID int,
+Amount DECIMAL(10,2),
+PaymentDate Date,
+PRIMARY KEY(PaymentID),
+FOREIGN KEY(StudentID) references Students(StudentID)
+);
+
+
+4. Create appropriate Primary Key and Foreign Key constraints for referential integrity. 
+
+
+5. Insert at least 10 sample records into each of the following tables. 
+i. Students 
+ii. Courses 
+iii. Enrollments 
+iv. Teacher 
+v. Payments
+
+
+
+
+INSERT INTO Students 
+VALUES
+    (1, 'John', 'Doe', '2000-01-01', 'john@example.com', '12347890'),
+    (2, 'Alice', 'Smith', '1999-05-15', 'alice@example.com', '987654210'),
+    (3, 'Bob', 'Johnson', '2001-10-20', 'bob@example.com', '555123567'),
+    (4, 'Emily', 'Brown', '2002-03-08', 'emily@example.com', '777888999'),
+    (5, 'Michael', 'Davis', '2003-07-12', 'michael@example.com', '111222333'),
+    (6, 'Sophia', 'Wilson', '2000-09-30', 'sophia@example.com', '999001111'),
+    (7, 'Oliver', 'Martinez', '1998-12-25', 'oliver@example.com', '444556666'),
+    (8, 'Grace', 'Garcia', '2001-06-18', 'grace@example.com', '222334444'),
+    (9, 'Daniel', 'Lopez', '2002-08-05', 'daniel@example.com', '666778888'),
+    (10, 'Ava', 'Torres', '1999-04-03', 'ava@example.com', '888999000');
+
+INSERT INTO Teacher  
+VALUES
+    (101, 'Sarah', 'Johnson', 'sarah@example.com'),
+    (102, 'Michael', 'Smith', 'michael@example.com'),
+    (103, 'Emily', 'Brown', 'emily@example.com'),
+    (104, 'David', 'Martinez', 'david@example.com'),
+    (105, 'Sophia', 'Garcia', 'sophia@example.com'),
+    (106, 'John', 'Davis', 'john@example.com'),
+    (107, 'Olivia', 'Wilson', 'olivia@example.com'),
+    (108, 'Daniel', 'Anderson', 'daniel@example.com'),
+    (109, 'Ava', 'Taylor', 'ava@example.com'),
+    (110, 'Matthew', 'Jones', 'matthew@example.com');
+
+INSERT INTO Courses 
+VALUES
+    (1, 'Mathematics', 3, 101),
+    (2, 'Physics', 4, 102),
+    (3, 'Literature', 3, 103),
+    (4, 'Chemistry', 4, 104),
+    (5, 'History', 3, 105),
+    (6, 'Biology', 4, 106),
+    (7, 'Computer Science', 3, 107),
+    (8, 'Art', 2, 108),
+    (9, 'Music', 2, 109),
+    (10, 'Economics', 3, 110);
+
+
+INSERT INTO Enrollments 
+VALUES
+    (111, 1, 1, '2023-01-15'),
+    (211, 2, 3, '2023-02-28'),
+    (311, 3, 2, '2023-03-10'),
+    (411, 4, 5, '2023-04-05'),
+    (511, 5, 4, '2023-05-20'),
+    (611, 6, 6, '2023-06-12'),
+    (711, 7, 8, '2023-07-04'),
+    (811, 8, 9, '2023-08-18'),
+    (911, 9, 7, '2023-09-25'),
+    (101, 10, 10, '2023-10-30');
+    
+
+INSERT INTO Payments 
+VALUES
+    (11, 1, 100.50, '2023-01-15'),
+    (22, 2, 75.25, '2023-02-28'),
+    (33, 3, 120.00, '2023-03-10'),
+    (44, 4, 90.75, '2023-04-05'),
+    (55, 5, 200.00, '2023-05-20'),
+    (66, 6, 150.80, '2023-06-12'),
+    (77, 7, 85.60, '2023-07-04'),
+    (88, 8, 110.25, '2023-08-18'),
+    (99, 9, 95.30, '2023-09-25'),
+    (100, 10, 180.45, '2023-10-30');
+    
+-- Tasks2 
+-- 1.Write an SQL query to insert a new student into the "Students" table with the following details:
+INSERT INTO Students 
+VALUES (11, 'Teenu', 'Aswal', '2002-02-07', 'aswa@gmail.com', '76435433');
+
+Select * from Students;
+
+-- 2.Write an SQL query to enroll a student in a course. Choose an existing student and course and insert a record into the "Enrollments" table with the enrollment date.
+INSERT INTO Enrollments 
+VALUES (121,1, 3, CURDATE());
+
+-- 3.Update the email address of a specific teacher in the "Teacher" table. Choose any teacher and  modify their email address;
+
+UPDATE Teacher SET Email= 'newemail@gmail.com'
+WHERE teacherID = 101;
+
+-- 4. Write an SQL query to delete a specific enrollment record from the "Enrollments" table. Select an enrollment record based on the student and course.
+
+DELETE FROM Enrollments
+WHERE studentID = 1 AND CourseID = 3;
+
+-- 5.Update the "Courses" table to assign a specific teacher to a course. Choose any course and teacher from the respective tables
+
+UPDATE Courses
+SET teacherID = 102
+WHERE courseID = 3;
+
+-- 6.Delete a specific student from the "Students" table and remove all their enrollment records from the "Enrollments" table. Be sure to maintain referential integrity.
+
+DELETE FROM Enrollments 
+WHERE StudentID= 10;
+
+DELETE FROM Payments
+WHERE StudentID = 10;
+
+DELETE FROM Students
+WHERE StudentID = 10;
+
+-- 7. Update the payment amount for a specific payment record in the "Payments" table. Choose any payment record and modify the payment amount.
+
+UPDATE Payments
+SET Amount = 500.00
+WHERE paymentID = 77;
+
+
+-- Task3. Aggregate functions,Having,order BY,Group BY and Joins:
+-- 1.Write an SQL query to calculate the total payments made by a specific student. You will need to join the "Payments" table with the "Students" table based on the student's ID.
+
+SELECT Students.studentID, Students.FirstName, Students.LastName, SUM(Payments.Amount) AS TotalPayments
+FROM Students
+LEFT JOIN Payments ON Students.StudentID = Payments.StudentID
+WHERE Students.studentID = 3
+GROUP BY Students.studentID, Students.FirstName, Students.LastName;
+
+-- 2. Write an SQL query to retrieve a list of courses along with the count of students enrolled in each course. Use a JOIN operation between the "Courses" table and the "Enrollments" table.
+
+SELECT Courses.CourseID, Courses.CourseName, COUNT(Enrollments.StudentID) AS StudentCount
+FROM Courses
+LEFT JOIN Enrollments ON Courses.courseID = Enrollments.CourseID
+GROUP BY Courses.CourseID, Courses.courseName;
+
+-- 3.  Write an SQL query to find the names of students who have not enrolled in any course. Use a LEFT JOIN between the "Students" table and the "Enrollments" table to identify students  without enrollments.
+
+SELECT Students.StudentID,Students.FirstName,Students.LastName
+FROM Students
+LEFT JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+WHERE Enrollments.studentID IS NULL;
+
+-- 4.Write an SQL query to retrieve the first name, last name of students, and the names of the  courses they are enrolled in. Use JOIN operations between the "Students" table and the "Enrollments" and "Courses" tables.
+
+SELECT Students.FirstName,Students.LastName,Courses.CourseName
+FROM Students
+LEFT JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+LEFT JOIN Courses 	ON Enrollments.CourseID = Courses.CourseID;
+
+-- 5. Create a query to list the names of teachers and the courses they are assigned to. Join the "Teacher" table with the "Courses" table.
+
+SELECT Teacher.FirstName , Teacher.LastName,Courses.CourseName
+FROM Teacher
+LEFT JOIN Courses ON Teacher.TeacherID = Courses.TeacherID;
+
+-- 6. Retrieve a list of students and their enrollment dates for a specific course. You'll need to join the "Students" table with the "Enrollments" and "Courses" tables.
+
+SELECT Students.FirstName,Students.LastName,Courses.CourseName,Enrollments.EnrollmentDate
+FROM Students
+ JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+ JOIN Courses 	ON Enrollments.CourseID = Courses.CourseID;
+ 
+ -- 7. Find the names of students who have not made any payments. Use a LEFT JOIN between the "Students" table and the "Payments" table and filter for students with NULL payment records.
+ 
+SELECT Students.FirstName,Students.LastName,Payments.Amount
+FROM Students
+LEFT JOIN Payments ON Students.StudentID = Payments.StudentID
+WHERE Payments.Amount IS NULL;
+ 
+-- 8. Write a query to identify courses that have no enrollments. You'll need to use a LEFT JOIN between the "Courses" table and the "Enrollments" table and filter for courses with NULL enrollment records.
+ 
+SELECT  Courses.CourseID, Courses.CourseName
+FROM Courses
+LEFT JOIN Enrollments ON Courses.CourseID = Enrollments.CourseID
+WHERE Enrollments.CourseID IS NULL;
+
+-- 9.Identify students who are enrolled in more than one course. Use a self-join on the "Enrollments" table to find students with multiple enrollment records.
+select e1.studentID from enrollments e1 join enrollments e2 on e1.studentID=e2.studentID and e1.courseID<>e2.courseID;
+
+-- 10.Find teachers who are not assigned to any courses. Use a LEFT JOIN between the "Teacher" table and the "Courses" table and filter for teachers with NULL course assignments.
+
+SELECT Teacher.teacherID, Teacher.FirstName,Teacher.LastName,Courses.CourseName
+FROM Teacher
+LEFT JOIN Courses ON Teacher.teacherID = Courses.teacherID
+WHERE Courses.teacherID IS NULL;
+
+
+-- Tasks4. Subquery and its type:
+-- 1.Write an SQL query to calculate the average number of students enrolled in each course. Use aggregate functions and subqueries to achieve this.
+
+SELECT AVG(NumStudents) AS AverageStudentsEnrolled
+FROM (
+    SELECT CourseID, COUNT(studentID) AS NumStudents
+    FROM Enrollments
+    GROUP BY CourseID
+) AS CourseEnrollments;
+
+-- 2. Identify the student(s) who made the highest payment. Use a subquery to find the maximum payment amount and then retrieve the student(s) associated with that amount.
+
+SELECT * 
+FROM (
+		SELECT StudentID , sum(Amount) AS TotalPayment 
+		FROM payments 
+		GROUP BY StudentID
+	) AS TotalPayments
+WHERE TotalPayment = ( SELECT max(TotalPayment) from ( select StudentID , sum(Amount) as TotalPayment from payments group by StudentID ) as Temp); 
+
+
+-- 3. Retrieve a list of courses with the highest number of enrollments. Use subqueries to find the course(s) with the maximum enrollment count.
+SELECT CourseID, COUNT(StudentID) AS EnrollmentCount
+FROM Enrollments
+GROUP BY CourseID
+HAVING EnrollmentCount = (SELECT MAX(EnrollmentCount) FROM (SELECT CourseID, COUNT(StudentID) AS EnrollmentCount FROM Enrollments GROUP BY CourseID) AS temp);
+
+-- 4. Calculate the total payments made to courses taught by each teacher. Use subqueries to sum payments for each teacher's courses.
+    SELECT TeacherID, SUM(amount) AS TotalPayments
+    FROM Courses
+    JOIN Enrollments ON Courses.CourseID = Enrollments.CourseID
+    JOIN Payments ON Enrollments.StudentID = Payments.StudentID
+    GROUP BY TeacherID;
+
+-- 5.Identify students who are enrolled in all available courses. Use subqueries to compare a student's enrollments with the total number of courses.
+
+SELECT StudentID, COUNT(DISTINCT CourseID) AS CourseCount
+FROM Enrollments
+GROUP BY StudentID
+HAVING CourseCount = (SELECT COUNT(DISTINCT CourseID) FROM Courses);
+
+-- 6 .Retrieve the names of teachers who have not been assigned to any courses. Use subqueries to find teachers with no course assignments.
+
+SELECT TeacherID, FirstName, LastName
+FROM Teacher
+WHERE TeacherID NOT IN (SELECT DISTINCT TeacherID FROM Courses);
+
+-- 7.Calculate the average age of all students. Use subqueries to calculate the age of each student based on their date of birth.
+
+SELECT AVG(age) AS AvgAge
+FROM (
+    SELECT DATEDIFF(CURDATE(), DOB) / 365 AS age
+    FROM Students
+) AS ages;
+
+-- 8.Identify courses with no enrollments. Use subqueries to find courses without enrollment records.
+
+SELECT CourseID, CourseName
+FROM Courses
+WHERE CourseID NOT IN (SELECT DISTINCT CourseID FROM Enrollments);
+
+-- 9 Calculate the total payments made by each student for each course they are enrolled in. Use subqueries and aggregate functions to sum payments.
+
+SELECT e.StudentId,concat(s.FirstName,' ',s.LastName) AS FULL_NAME ,e.CourseId,(SELECT sum(Amount) FROM Payments p
+WHERE p.StudentId = e.StudentId) AS total_payments
+FROM Enrollments e
+JOIN Students s on s.StudentId=e.StudentId
+GROUP BY e.StudentId,e.CourseId;
+
+-- 10.Identify students who have made more than one payment. Use subqueries and aggregate functions to count payments per student and filter for those with counts greater than one.
+SELECT StudentID
+FROM Payments
+GROUP BY StudentID
+HAVING COUNT(PaymentID) > 1;
+
+-- 11.Write an SQL query to calculate the total payments made by each student. Join the "Students" table with the "Payments" table and use GROUP BY to calculate the sum of payments for each student.
+SELECT Students.StudentID, FirstName, LastName, SUM(amount) AS TotalPayments
+FROM Students
+LEFT JOIN Payments ON Students.StudentID = Payments.StudentID
+GROUP BY Students.StudentID, FirstName, LastName;
+
+
+-- 12.Retrieve a list of course names along with the count of students enrolled in each course. Use JOIN operations between the "Courses" table and the "Enrollments" table and GROUP BY to count enrollments.
+SELECT Courses.CourseID, CourseName, COUNT(Enrollments.StudentID) AS NumOfStudentsEnrolled
+FROM Courses
+LEFT JOIN Enrollments ON Courses.CourseID = Enrollments.CourseID
+GROUP BY Courses.CourseID, CourseName;
+
+-- 13. Calculate the average payment amount made by students. Use JOIN operations between the "Students" table and the "Payments" table and GROUP BY to calculate the average.
+SELECT Students.StudentID, FirstName, LastName, AVG(amount) AS AvgPaymentAmount
+FROM Students
+JOIN Payments ON Students.StudentID = Payments.StudentID
+GROUP BY Students.StudentID, FirstName, LastName;
+
