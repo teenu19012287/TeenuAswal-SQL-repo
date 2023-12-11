@@ -326,6 +326,15 @@ FROM Payments
 GROUP BY StudentID
 HAVING COUNT(PaymentID) > 1;
 
+SELECT StudentID, FirstName, LastName
+FROM Students
+WHERE StudentID IN (
+    SELECT StudentID
+    FROM Payments
+    GROUP BY StudentID
+    HAVING COUNT(*) > 1
+);
+
 -- 11.Write an SQL query to calculate the total payments made by each student. Join the "Students" table with the "Payments" table and use GROUP BY to calculate the sum of payments for each student.
 SELECT Students.StudentID, FirstName, LastName, SUM(amount) AS TotalPayments
 FROM Students
